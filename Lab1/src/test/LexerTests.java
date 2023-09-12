@@ -56,6 +56,67 @@ public class LexerTests {
 	}
 
 	@Test
+	public void testPunc() {
+	// first argument to runtest is the string to lex; the remaining arguments
+	// are the expected tokens
+		runtest("; [ { ) ] ,",
+			new Token(SEMICOLON, 0, 0, ";"),
+			new Token(LBRACKET, 0, 2, "["),
+			new Token(LCURLY, 0, 4, "{"),
+			new Token(RPAREN, 0, 6, ")"),
+			new Token(RBRACKET, 0, 8, "]"),
+			new Token(COMMA, 0, 10, ","),
+			new Token(EOF, 0, 11, ""));
+	}
+
+	@Test
+	public void testOperator() {
+	// first argument to runtest is the string to lex; the remaining arguments
+	// are the expected tokens
+		runtest("== * >= /",
+			new Token(EQEQ, 0, 0, "=="),
+			new Token(TIMES, 0, 3, "*"),
+			new Token(GEQ, 0, 5, ">="),
+			new Token(DIV, 0, 8, "/"),
+			new Token(EOF, 0, 9, ""));
+	}
+
+	@Test
+	public void testIdentifier() {
+	// first argument to runtest is the string to lex; the remaining arguments
+	// are the expected tokens
+		runtest("abc fgh a",
+			new Token(ID, 0, 0, "abc"),
+			new Token(ID, 0, 4, "fgh"),
+			new Token(ID, 0, 8, "a"),
+			new Token(EOF, 0, 9, ""));
+	}
+
+	@Test
+	public void testPositioningAndLiteral() {
+	// first argument to runtest is the string to lex; the remaining arguments
+	// are the expected tokens
+		runtest("\"abc\" \n1",
+			new Token(STRING_LITERAL, 0, 0, "abc"),
+			new Token(INT_LITERAL, 1, 0, "1"),
+			new Token(EOF, 1, 1, ""));
+	}
+
+	@Test
+	public void testAll() {
+	// first argument to runtest is the string to lex; the remaining arguments
+	// are the expected tokens
+		runtest("> \"bcd\" , break",
+			new Token(GT, 0, 0, ">"),
+			new Token(STRING_LITERAL, 0, 2, "bcd"),
+			new Token(COMMA, 0, 8, ","),
+			new Token(BREAK, 0, 10, "break"),
+			new Token(EOF, 0, 15, ""));
+	}
+
+
+
+	@Test
 	public void testStringLiteralWithDoubleQuote() {
 		runtest("\"\"\"",
 				new Token(STRING_LITERAL, 0, 0, ""),
