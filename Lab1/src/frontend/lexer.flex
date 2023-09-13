@@ -42,6 +42,57 @@ WhiteSpace = [ ] | \t | \f | \n | \r
 %%
 /* put in your rules here.    */
 
+// keywords
+"boolean" { return BOOLEAN; }
+"break" { return BREAK; }
+"else" { return ELSE; }
+"false" { return FALSE; }
+"if" { return IF; }
+"import" { return IMPORT; }
+"int" { return INT; }
+"module" { return MODULE; }
+"public" { return PUBLIC; }
+"return" { return RETURN; }
+"true" { return TRUE; }
+"type" { return TYPE; }
+"void" { return VOID; }
+"while" { return WHILE; }
+
+// punctuation symbols
+"," { return token(COMMA); } /* , */
+"[" { return token(LBRACKET); } /* [ */
+"{" { return token(LCURLY); } /* { */
+"(" { return token(LPAREN); } /* ( */
+"]" { return token(RBRACKET); } /* ] */
+"}" { return token(RCURLY); } /* } */
+")" { return token(RPAREN); } /* ) */
+";" { return token(SEMICOLON); } /* ; */
+
+// operators
+"/" { return token(DIV); } /* / */
+"==" { return token(EQEQ); } /* == */
+"=" { return token(EQL); } /* = */
+">=" { return token(GEQ); } /* >= */
+">" { return token(GT); } /* > */
+"<=" { return token(LEQ); } /* <= */
+"<" { return token(LT); } /* < */
+"-" { return token(MINUS); } /* - */
+"!=" { return token(NEQ); } /* != */
+"+" { return token(PLUS); } /* + */
+"*" { return token(TIMES); } /* * */
+
+// identifier
+// The first character must be a letter. Each
+// subsequent character in the sequence must be a letter, a digit or an underscore
+[a-zA-z][a-zA-Z0-9_] { return token(ID, yytext()); } 
+
+// literals
+// Int literal: Also note that superfluous leading zeros are allowed
+[0-9]+ { return token(INT_LITERAL);}
+
+// String literal: accepts everything except double quote and newline
+^\"[^\"^\n]+\"$ { return token(STRING_LITERAL, yytext().substring(1,yylength()-1)); }
+
 
 /* You don't need to change anything below this line. */
 .							{ throw new Error("unexpected character '" + yytext() + "'"); }
