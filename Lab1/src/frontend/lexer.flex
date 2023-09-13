@@ -22,7 +22,6 @@ import static frontend.Token.Type.*;
 	*/
 	
 	private Token token(Token.Type type) {
-//		return new Token(type, yyline, yycolumn, yytext());
 		return token(type, yytext());
 	}
 	
@@ -85,14 +84,16 @@ WhiteSpace = [ ] | \t | \f | \n | \r
 // identifier
 // The first character must be a letter. Each
 // subsequent character in the sequence must be a letter, a digit or an underscore
-[a-zA-z][a-zA-Z0-9_] { return token(ID, yytext()); } 
+[a-zA-z][a-zA-Z0-9_]* { return token(ID, yytext()); } 
 
 // literals
 // Int literal: Also note that superfluous leading zeros are allowed
 [0-9]+ { return token(INT_LITERAL);}
 
 // String literal: accepts everything except double quote and newline
-// ^\"[^\"^\n]+\"$ { return token(STRING_LITERAL, yytext().substring(1,yylength()// -1)); }
+\"([^\n\"]*)\" { return token(STRING_LITERAL, yytext().substring(1,yylength() -1)); }
+
+{WhiteSpace} {}
 
 
 /* You don't need to change anything below this line. */
