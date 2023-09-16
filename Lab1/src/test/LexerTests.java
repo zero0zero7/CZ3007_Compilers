@@ -93,11 +93,12 @@ public class LexerTests {
 	public void testIdentifier() {
 		// first argument to runtest is the string to lex; the remaining arguments
 		// are the expected tokens
-		runtest("abc fgh a",
+		runtest("abc fgh a trued",
 				new Token(ID, 0, 0, "abc"),
 				new Token(ID, 0, 4, "fgh"),
 				new Token(ID, 0, 8, "a"),
-				new Token(EOF, 0, 9, ""));
+				new Token(ID, 0, 10, "trued"),
+				new Token(EOF, 0, 15, ""));
 	}
 
 	@Test
@@ -139,7 +140,7 @@ public class LexerTests {
 
 	@Test
 	public void testSimpleStmts() {
-		runtest("a = 1; b=2;\nwhile (a < b)\n\t{ a = a + 1; }",
+		runtest("a = 1; b=2;\nwhile (a < b)\n\t{ a = a + 1; }\ntrued=\"falsed\";",
 				new Token(ID, 0, 0, "a"),
 				new Token(EQL, 0, 2, "="),
 				new Token(INT_LITERAL, 0, 4, "1"),
@@ -163,7 +164,12 @@ public class LexerTests {
 				new Token(INT_LITERAL, 2, 11, "1"),
 				new Token(SEMICOLON, 2, 12, ";"),
 				new Token(RCURLY, 2, 14, "}"),
-				new Token(EOF, 2, 15, ""));
+
+				new Token(ID, 3, 0, "trued"),
+				new Token(EQL, 3, 5, "="),
+				new Token(STRING_LITERAL, 3, 6, "falsed"),
+				new Token(SEMICOLON, 3, 14, ";"),
+				new Token(EOF, 3, 15, ""));
 	}
 
 }
