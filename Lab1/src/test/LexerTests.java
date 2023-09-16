@@ -178,4 +178,12 @@ public class LexerTests {
 			new Token(ID, 0, 6, "whileVariable"),
 			new Token(EOF, 0, 19, ""));
 	}
+
+	@Test
+	public void testInvalidVariable() {
+		runtest("123variable",
+			new Token(INT_LITERAL, 0, 0, "123"),
+			new Token(ID, 0, 3, "variable"),
+			new Token(EOF, 0, 11, ""));
+	}
 }
