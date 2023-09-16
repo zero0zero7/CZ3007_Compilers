@@ -171,4 +171,11 @@ public class LexerTests {
 				new Token(EOF, 3, 14, ""));
 	}
 
+	@Test
+	public void testCommonPrefix() {
+		runtest("while whileVariable",
+			new Token(WHILE, 0, 0, "while"),
+			new Token(ID, 0, 6, "whileVariable"),
+			new Token(EOF, 0, 19, ""));
+	}
 }
