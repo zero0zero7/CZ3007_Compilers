@@ -139,7 +139,7 @@ public class LexerTests {
 
 	@Test
 	public void testSimpleStmts() {
-		runtest("a = 1; b=2; while (a < b) { a = a + 1; }",
+		runtest("a = 1; b=2;\nwhile (a < b)\n\t{ a = a + 1; }",
 				new Token(ID, 0, 0, "a"),
 				new Token(EQL, 0, 2, "="),
 				new Token(INT_LITERAL, 0, 4, "1"),
@@ -149,22 +149,21 @@ public class LexerTests {
 				new Token(INT_LITERAL, 0, 9, "2"),
 				new Token(SEMICOLON, 0, 10, ";"),
 
-				new Token(WHILE, 0, 12, "while"),
-				new Token(LPAREN, 0, 18, "("),
-				new Token(ID, 0, 19, "a"),
-				new Token(LT, 0, 21, "<"),
-				new Token(ID, 0, 23, "b"),
-				new Token(RPAREN, 0, 24, ")"),
-				new Token(LCURLY, 0, 26, "{"),
-				new Token(ID, 0, 28, "a"),
-				new Token(EQL, 0, 30, "="),
-				new Token(ID, 0, 32, "a"),
-				new Token(PLUS, 0, 34, "+"),
-				new Token(INT_LITERAL, 0, 36, "1"),
-				new Token(SEMICOLON, 0, 37, ";"),
-				new Token(RCURLY, 0, 39, "}"),
-
-				new Token(EOF, 0, 40, ""));
+				new Token(WHILE, 1, 0, "while"),
+				new Token(LPAREN, 1, 6, "("),
+				new Token(ID, 1, 7, "a"),
+				new Token(LT, 1, 9, "<"),
+				new Token(ID, 1, 11, "b"),
+				new Token(RPAREN, 1, 12, ")"),
+				new Token(LCURLY, 2, 1, "{"),
+				new Token(ID, 2, 3, "a"),
+				new Token(EQL, 2, 5, "="),
+				new Token(ID, 2, 7, "a"),
+				new Token(PLUS, 2, 9, "+"),
+				new Token(INT_LITERAL, 2, 11, "1"),
+				new Token(SEMICOLON, 2, 12, ";"),
+				new Token(RCURLY, 2, 14, "}"),
+				new Token(EOF, 2, 15, ""));
 	}
 
 }
