@@ -33,7 +33,180 @@
 		  ;
   */
 
-Module = ;
+
+// A module consists of the keyword module, followed by an identifier (which is the module’s name), 
+// followed by an opening curly brace, followed by imports, followed by declarations, followed by a closing curly brace.
+
+Module = MODULE ID LCURLY Imports Declarations RCURLY;
+
+// A module’s imports (nonterminal Imports) specify what other modules this module will import. 
+// They consist of zero or more import statements. An import statement (nonterminal Import) consists of the keyword import, 
+// followed by an identifier, followed by a semicolon. 
+// The identifier is the name of a module to be imported.
+// eg. import SomeModule; import SomeModule2; import SomeModule3;
+
+Imports = Import Imports 
+  | 
+  ;
+Import = IMPORT ID SEMICOLON;
+
+// A module’s declarations (nonterminal Declarations) consist of zero or more declarations. 
+// A declaration is either a function declaration, or a field declaration, or a type declaration.
+
+Declarations = Declaration Declarations;
+Declaration = FunctionDeclaration
+  |
+  FieldDeclaration
+  |
+  TypeDeclaration
+  ;
+
+// A function declaration consists of an accessibility specifier, 
+// a type name, an identifier, an opening parenthesis, a parameter list, 
+// a closing parenthesis, an opening curly brace, a possibly empty list of statements, and a closing curly brace.
+// eg. public int SomeFunction(ParameterList) { StatementList }
+
+FunctionDeclaration = Accessibility TypeName ID LPAREN ParameterList RPAREN LCURLY StatementList RCURLY;
+
+StatementList = Statement StatementList 
+  |
+  ;
+
+// A field declaration consists of an accessibility specifier, a type name, an identifier, and a semicolon.
+
+FieldDeclaration = Accessibility TypeName ID SEMICOLON;
+
+// A type declaration consists of an accessibility specifier, the keyword type, an identifier, a single equals symbol, a string literal, and a semicolon.
+// eg. public type SomeClassIdentifier = "SomeClass";
+
+TypeDeclaration = Accessibility TYPE ID EQL STRING_LITERAL SEMICOLON;
+
+// An accessibility specifier consists of either the keyword public, or of nothing at all.
+Accessibility = PUBLIC
+		  |
+		  ;
+
+// A type name is either a primitive type, an array type, or an identifier.
+
+TypeName = PrimitiveType
+  |
+  ArrayType
+  |
+  ID
+  ;
+
+// A primitive type is one of the keywords void, boolean and int.
+
+PrimitiveType = void 
+  |
+  boolean
+  |
+  int
+  ;
+
+// An array type is a type name, followed by a left bracket, followed by a right bracket. (Hint: In order to avoid
+// LALR conflicts, you will need to expand the definition of the array type nonterminal as discussed in the tutorial.) 
+// eg. int[]
+
+ArrayType = TypeName LBRACKET RBRACKET;
+
+// A parameter list is a possibly empty list of parameters separated by commas.
+// eg. int someParam1, bool someParam2
+// Note: Remove left recursion, remove common prefix, remove mutual recursion
+
+ParameterList = ; Parameter ParameterListTail;
+ParameterListTail = COMMA Parameter ParameterListTail
+  |
+  ;
+
+// A parameter is a type name followed by an identifier.
+// eg. int someParameter
+
+Parameter = TypeName ID;
+
+// A statement is one of the following:
+// • a local variable declaration, which consists of a type name, followed by an identifier, followed by a semicolon;
+// • a block of statements, which consists of an opening curly brace, followed by a possibly empty list of statements, followed by a closing curly brace;
+
+// • an if statement, which consists of an if keyword, an opening parenthesis, an expression, a closing parenthesis, 
+// a statement, an else keyword, and another statement; optionally, the else keyword and the 
+// last statement may be missing (Note: as discussed, this will lead to a shift-reduce conflict, 
+// which is correctly resolved by favouring shift over reduce.);
+
+// • a while statement, which consists of a while keyword, an opening parenthesis, an expression, a closing parenthesis, and a statement;
+// eg. while (someExpression) Statement
+
+// • a break statement, which consists of a break keyword followed by a semicolon;
+
+// • a return statement, which consists of a return keyword, followed by an optional expression, followed by a semicolon;
+// eg. return 1+1;
+// eg. return;
+
+// • an expression statement, which consists of an expression followed by a semicolon.
+// eg. 
+
+Statement = LocalVariableDeclaration 
+  |
+  BlockStatement
+  |
+  IfStatement
+  | 
+  WhileStatement
+  |
+  BreakStatement
+  |
+  ReturnStatement
+  |
+  ExpressionStatement
+  ;
+
+LocalVariableDeclaration = TypeName ID SEMICOLON;
+
+BlockStatement = LCURLY StatementList RCURLY;
+
+IfStatement = IF LPAREN Expression RPAREN OptionalElseStatement;
+OptionalElseStatement = ELSE Statement
+  |
+  ;
+
+WhileStatement = WHILE LPAREN Expression RPAREN Statement
+
+BreakStatement = BREAK SEMICOLON;
+
+ReturnStatement = RETURN OptionalExpression SEMICOLON;
+
+OptionalExpression = Expression
+  |
+  ;
+
+ExpressionStatement = Expression SEMICOLON;
+
+
+/*
+NOT IMPLEMENTED: 
+An expression is either an assignment or a right hand side expression.
+An assignment is a left hand side expression, followed by a single equals sign, followed by an expression. A left hand side expression is either an identifier or an array access. An array access is a left hand side
+expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
+A right hand side expression is an arithmetic expression, optionally followed by a comparison operator and
+another arithmetic expression. A comparison operator is one of EQEQ, NEQ, LT, LEQ, GT, GEQ.
+An arithmetic expression is either an arithmetic expression, followed by an additive operator, followed by a
+term; or just a term. An additive operator is either PLUS or MINUS.
+A term is either a term, followed by a multiplicative operator, followed by a factor; or just a factor. A
+multiplicative operator is one of TIMES, DIV, MOD.
+A factor is either a MINUS followed by a factor, or a primary expression.
+A primary expression is one of the following:
+• a left hand side expression;
+• a function call: an identifier, followed by an opening parenthesis, followed by a possibly empty list of
+expressions separated by comma, followed by a closing parenthesis;
+• an array expression: an opening bracket, followed by a non-empty list of expressions separated by comma,
+followed by a closing bracket; 
+• a string literal;
+• an integer literal;
+• one of the Boolean literals TRUE and FALSE;
+• a parenthesised expression: an opening parenthesis, followed by an expression, followed by a closing
+parenthesis.
+
+*/
 
 /**/
 
