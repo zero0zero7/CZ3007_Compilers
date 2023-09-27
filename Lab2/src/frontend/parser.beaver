@@ -111,7 +111,7 @@ ArrayType = PrimitiveType LBRACKET RBRACKET
             |
             ID LBRACKET RBRACKET
             |
-            PrimitiveType LBRACKET RBRACKET
+            ArrayType LBRACKET RBRACKET
             ;
 
 // A parameter list is a possibly empty list of parameters separated by commas.
