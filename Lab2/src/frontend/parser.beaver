@@ -50,7 +50,7 @@ Imports = Import Imports
   ;
 Import = IMPORT ID SEMICOLON;
 
-// A module’s declarations (nonterminal Declarations) consist of zero or more declarations. 
+// A module’s declarations (nonterminal Declarations) consist of zero or more declarations.
 // A declaration is either a function declaration, or a field declaration, or a type declaration.
 
 Declarations = Declaration Declarations
