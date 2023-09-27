@@ -70,9 +70,6 @@ Declaration = FunctionDeclaration
 
 FunctionDeclaration = Accessibility TypeName ID LPAREN ParameterList RPAREN LCURLY StatementList RCURLY;
 
-StatementList = Statement StatementList 
-  |
-  ;
 
 // A field declaration consists of an accessibility specifier, a type name, an identifier, and a semicolon.
 
@@ -99,18 +96,23 @@ TypeName = PrimitiveType
 
 // A primitive type is one of the keywords void, boolean and int.
 
-PrimitiveType = void 
+PrimitiveType = VOID 
   |
-  boolean
+  BOOLEAN
   |
-  int
+  INT
   ;
 
 // An array type is a type name, followed by a left bracket, followed by a right bracket. (Hint: In order to avoid
 // LALR conflicts, you will need to expand the definition of the array type nonterminal as discussed in the tutorial.) 
 // eg. int[]
 
-ArrayType = TypeName LBRACKET RBRACKET;
+ArrayType = PrimitiveType LBRACKET RBRACKET
+            |
+            ID LBRACKET RBRACKET
+            |
+            PrimitiveType LBRACKET RBRACKET
+            ;
 
 // A parameter list is a possibly empty list of parameters separated by commas.
 // eg. int someParam1, bool someParam2
@@ -129,6 +131,9 @@ Parameter = TypeName ID;
 // A statement is one of the following:
 // • a local variable declaration, which consists of a type name, followed by an identifier, followed by a semicolon;
 // • a block of statements, which consists of an opening curly brace, followed by a possibly empty list of statements, followed by a closing curly brace;
+StatementList = Statement StatementList 
+  |
+  ;
 
 // • an if statement, which consists of an if keyword, an opening parenthesis, an expression, a closing parenthesis, 
 // a statement, an else keyword, and another statement; optionally, the else keyword and the 
