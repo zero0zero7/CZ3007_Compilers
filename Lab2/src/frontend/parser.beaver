@@ -198,13 +198,13 @@ ExpressionStatement = Expression SEMICOLON;
 
 
 // An expression is either an assignment or a right hand side expression.
-Expr = Assignment
+Expression = Assignment
   |
   RhsExpr
   ;
 
 // An assignment is a left hand side expression, followed by a single equals sign followed by an expression. 
-Assignment = LhsExpr EQL Expr;
+Assignment = LhsExpr EQL Expression;
 
 // A left hand side expression is either an identifier or an array access.
 LhsExpr = ID
@@ -213,7 +213,7 @@ LhsExpr = ID
   ;
 
 // An array access is a left hand side expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
-ArrayAccess = LhsExpr LBRACKET Expr RBRACKET;
+ArrayAccess = LhsExpr LBRACKET Expression RBRACKET;
 
 // A right hand side expression is an arithmetic expression, optionally followed by a comparison operator and another arithmetic expression. 
 RhsExpr = ArithmeticExpr
@@ -236,7 +236,7 @@ Comparison = EQEQ
   ;
 
 // An arithmetic expression is either an arithmetic expression, followed by an additive operator, followed by a term; or just a term. 
-ArithmeticExpr = ArithmeticExpr Addditive Term
+ArithmeticExpr = ArithmeticExpr Additive Term
   |
   Term
   ;
@@ -287,7 +287,7 @@ PrimaryExpr = LhsExpr
   |
   BOOLEAN
   |
-  LPAREN Expr RPAREN
+  LPAREN Expression RPAREN
   ;
 
 FunctionCall = ID LPAREN ExprListEmpty RPAREN;
@@ -295,8 +295,8 @@ FunctionCall = ID LPAREN ExprListEmpty RPAREN;
 ExprListEmpty = ExprListNonEmpty
   |
   ;
-ExprListNonEmpty = Expr ExprListTail;
-ExprListTail = COMMA Expr ExprListTail
+ExprListNonEmpty = Expression ExprListTail;
+ExprListTail = COMMA Expression ExprListTail
   |
   ;
 
