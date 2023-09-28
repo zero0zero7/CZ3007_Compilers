@@ -23,7 +23,7 @@
 %goal Module;
 
 // temporary declaration, you can remove this once you have written all other rules
-%goal Dummy;
+// %goal Dummy;
 
 /* TODO: Flesh out the rule for Module, and add rules for other nonterminals. Here is an example
          of a rule you may want to add:
@@ -184,7 +184,7 @@ OptionalElseStatement = ELSE Statement
   |
   ;
 
-WhileStatement = WHILE LPAREN Expression RPAREN Statement
+WhileStatement = WHILE LPAREN Expression RPAREN Statement;
 
 BreakStatement = BREAK SEMICOLON;
 
@@ -197,34 +197,114 @@ OptionalExpression = Expression
 ExpressionStatement = Expression SEMICOLON;
 
 
-/*
-NOT IMPLEMENTED: 
-An expression is either an assignment or a right hand side expression.
-An assignment is a left hand side expression, followed by a single equals sign, followed by an expression. A left hand side expression is either an identifier or an array access. An array access is a left hand side
-expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
-A right hand side expression is an arithmetic expression, optionally followed by a comparison operator and
-another arithmetic expression. A comparison operator is one of EQEQ, NEQ, LT, LEQ, GT, GEQ.
-An arithmetic expression is either an arithmetic expression, followed by an additive operator, followed by a
-term; or just a term. An additive operator is either PLUS or MINUS.
-A term is either a term, followed by a multiplicative operator, followed by a factor; or just a factor. A
-multiplicative operator is one of TIMES, DIV, MOD.
-A factor is either a MINUS followed by a factor, or a primary expression.
-A primary expression is one of the following:
-• a left hand side expression;
-• a function call: an identifier, followed by an opening parenthesis, followed by a possibly empty list of
-expressions separated by comma, followed by a closing parenthesis;
-• an array expression: an opening bracket, followed by a non-empty list of expressions separated by comma,
-followed by a closing bracket; 
-• a string literal;
-• an integer literal;
-• one of the Boolean literals TRUE and FALSE;
-• a parenthesised expression: an opening parenthesis, followed by an expression, followed by a closing
-parenthesis.
+// An expression is either an assignment or a right hand side expression.
+Expr = Assignment
+  |
+  RhsExpr
+  ;
 
-*/
+// An assignment is a left hand side expression, followed by a single equals sign followed by an expression. 
+Assignment = LhsExpr EQL Expr;
+
+// A left hand side expression is either an identifier or an array access.
+LhsExpr = ID
+  |
+  ArrayAccess
+  ;
+
+// An array access is a left hand side expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
+ArrayAccess = LhsExpr LBRACKET Expr RBRACKET;
+
+// A right hand side expression is an arithmetic expression, optionally followed by a comparison operator and another arithmetic expression. 
+RhsExpr = ArithmeticExpr
+  |
+  ArithmeticExpr Comparison ArithmeticExpr
+  ;
+
+// A comparison operator is one of EQEQ, NEQ, LT, LEQ, GT, GEQ.
+Comparison = EQEQ
+  |
+  NEQ
+  |
+  LT
+  |
+  LEQ
+  |
+  GT
+  |
+  GEQ
+  ;
+
+// An arithmetic expression is either an arithmetic expression, followed by an additive operator, followed by a term; or just a term. 
+ArithmeticExpr = ArithmeticExpr Addditive Term
+  |
+  Term
+  ;
+
+// An additive operator is either PLUS or MINUS.
+Additive = PLUS
+  |
+  MINUS
+  ;
+
+// A term is either a term, followed by a multiplicative operator, followed by a factor; or just a factor.
+Term = Term Multiplicative Factor
+  |
+  Factor
+  ;
+
+// A multiplicative operator is one of TIMES, DIV, MOD.
+Multiplicative = TIMES
+  |
+  DIV
+  |
+  MOD
+  ;
+
+// A factor is either a MINUS followed by a factor, or a primary expression.
+Factor = MINUS Factor
+  |
+  PrimaryExpr
+  ;
+
+// A primary expression is one of the following:
+// • a left hand side expression;
+// • a function call: an identifier, followed by an opening parenthesis, followed by a possibly empty list of expressions separated by comma, followed by a closing parenthesis;
+// • an array expression: an opening bracket, followed by a non-empty list of expressions separated by comma,followed by a closing bracket; 
+// • a string literal;
+// • an integer literal;
+// • one of the Boolean literals TRUE and FALSE;
+// • a parenthesised expression: an opening parenthesis, followed by an expression, followed by a closing parenthesis.
+PrimaryExpr = LhsExpr
+  |
+  FunctionCall
+  |
+  ArrayExpr
+  |
+  STRING_LITERAL
+  |
+  INT_LITERAL
+  |
+  BOOLEAN
+  |
+  LPAREN Expr RPAREN
+  ;
+
+FunctionCall = ID LPAREN ExprListEmpty RPAREN;
+
+ExprListEmpty = ExprListNonEmpty
+  |
+  ;
+ExprListNonEmpty = Expr ExprListTail;
+ExprListTail = COMMA Expr ExprListTail
+  |
+  ;
+
+ArrayExpr = LBRACKET ExprListNonEmpty RBRACKET;
 
 /**/
 
-/* Dummy rule to make the lexer compile. Remove this once you have written all other rules. */	  
+/* Dummy rule to make the lexer compile. Remove this once you have written all other rules. 
 Dummy = MODULE INT VOID IF ELSE WHILE RETURN BREAK BOOLEAN PUBLIC TRUE FALSE INT_LITERAL STRING_LITERAL ID TYPE IMPORT
            PLUS MINUS TIMES DIV MOD EQEQ NEQ LEQ GEQ LT GT LBRACKET RPAREN COMMA RCURLY LCURLY SEMICOLON RBRACKET LPAREN EQL;
+*/
