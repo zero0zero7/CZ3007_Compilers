@@ -285,7 +285,9 @@ PrimaryExpr = LhsExpr
   |
   INT_LITERAL
   |
-  BOOLEAN
+  TRUE
+  |
+  FALSE
   |
   LPAREN Expression RPAREN
   ;
