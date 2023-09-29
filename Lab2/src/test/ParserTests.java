@@ -71,12 +71,31 @@ public class ParserTests {
 	}
 
 	@Test
+	public void testWhile() {
+		runtest("module Test {"+
+			"public void aFuncs() {"+
+			"while(e>=f) {break;}"+
+			"}"+
+		"}");
+	}
+
+	@Test
+	public void testIfElse() {
+		runtest("module Test {"+
+			"public void aFuncs() {"+
+			"if(e>=f) {bool x;}"+
+			"else {int x;}"+
+			"}"+
+		"}");
+	}
+
+	@Test
 	public void testFunctionCondition() {
 		runtest("module Test {"+
 			"public void aFuncs() {"+
-			"if(c == d) {int x;}"+
-			"else {x = 20;}"+
-			"while(e >= f) {break;}"+
+			"if(c==d) {int x;}"+
+			"else {x=20;}"+
+			"while(e>=f) {break;}"+
 			"}"+
 		"}");
 	}
@@ -86,7 +105,7 @@ public class ParserTests {
 		runtest("module Test {"+
 			"int[] aArray;"+
 			"bool[][] twoDArray;"+
-			"arrayAccess = aArray[1]"+
+			"arrayAccess = aArray[1];"+
 		"}");
 	}
 

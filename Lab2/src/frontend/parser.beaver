@@ -179,9 +179,13 @@ LocalVariableDeclaration = TypeName ID SEMICOLON;
 
 BlockStatement = LCURLY StatementList RCURLY;
 
-IfStatement = IF LPAREN Expression RPAREN Statement OptionalElseStatement;
-OptionalElseStatement = ELSE Statement
+// IfStatement = IF LPAREN Expression RPAREN Statement OptionalElseStatement;
+// OptionalElseStatement = ELSE Statement
+//   |
+//   ;
+IfStatement = IF LPAREN Expression RPAREN Statement
   |
+  IF LPAREN Expression RPAREN Statement ELSE Statement
   ;
 
 WhileStatement = WHILE LPAREN Expression RPAREN Statement;
