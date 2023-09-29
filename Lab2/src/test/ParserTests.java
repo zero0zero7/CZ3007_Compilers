@@ -37,4 +37,57 @@ public class ParserTests {
 	public void testEmptyModule() {
 		runtest("module Test { }");
 	}
+
+	
+	@Test
+	public void testImportDeclaration() {
+		runtest("module Test {"+
+			"import ImportTest;"+
+			"int aVariable;"+
+			"public void aFuncs() {}"+
+			"public type aVariable = \"test\";"+
+		"}");
+	}
+
+	@Test
+	public void testFunctionParam() {
+		runtest("module Test {"+
+			"public void aFuncs() {}"+
+			"public void aFuncs(int p1) {}"+
+			"public void aFuncs(int p1, float p2) {}"+
+		"}");
+	}
+
+	@Test
+	public void testFunctionStatementList() {
+		runtest("module Test {"+
+			"public void aFuncs() {"+
+			"boolean LocalVarDeclar;"+
+			"{}"+ // empty block list
+			"if(a<b) {}"+
+			"return;"+
+			"}"+
+		"}");
+	}
+
+	@Test
+	public void testFunctionCondition() {
+		runtest("module Test {"+
+			"public void aFuncs() {"+
+			"if(c == d) {int x;}"+
+			"else {x = 20;}"+
+			"while(e >= f) {break;}"+
+			"}"+
+		"}");
+	}
+
+	@Test
+	public void arrayTests() {
+		runtest("module Test {"+
+			"int[] aArray;"+
+			"bool[][] twoDArray;"+
+			"arrayAccess = aArray[1]"+
+		"}");
+	}
+
 }
