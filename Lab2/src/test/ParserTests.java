@@ -101,6 +101,29 @@ public class ParserTests {
 	}
 
 	@Test
+	public void testArrayinFunc() {
+		runtest("module Test {"+
+			"public void aFunc() {"+
+			"bool a;"+
+			"a = TRUE;"+
+			"int b;"+
+			"b = 10;"+
+			"int[] c;"+
+			"b = c[10];"+
+			"}"+
+		"}");
+	}
+
+	@Test
+	public void arrayAccTest() {
+		runtest("module Test {"+
+			"int[] aArray;"+
+			"int a;"+
+			"arrayAccess = aArray[a];"+
+			"}");
+	}
+
+	@Test
 	public void arrayTests() {
 		runtest("module Test {"+
 			"int[] aArray;"+

@@ -179,13 +179,9 @@ LocalVariableDeclaration = TypeName ID SEMICOLON;
 
 BlockStatement = LCURLY StatementList RCURLY;
 
-// IfStatement = IF LPAREN Expression RPAREN Statement OptionalElseStatement;
-// OptionalElseStatement = ELSE Statement
-//   |
-//   ;
-IfStatement = IF LPAREN Expression RPAREN Statement
+IfStatement = IF LPAREN Expression RPAREN Statement ELSE Statement
   |
-  IF LPAREN Expression RPAREN Statement ELSE Statement
+  IF LPAREN Expression RPAREN Statement
   ;
 
 WhileStatement = WHILE LPAREN Expression RPAREN Statement;
@@ -202,18 +198,22 @@ ExpressionStatement = Expression SEMICOLON;
 
 
 // An expression is either an assignment or a right hand side expression.
-Expression = Assignment
+// Expression = Assignment
+//   |
+//   RhsExpr
+//   ;
+Expression = RhsExpr
   |
-  RhsExpr
+  Assignment
   ;
 
 // An assignment is a left hand side expression, followed by a single equals sign followed by an expression. 
 Assignment = LhsExpr EQL Expression;
 
 // A left hand side expression is either an identifier or an array access.
-LhsExpr = ID
+LhsExpr = ArrayAccess
   |
-  ArrayAccess
+  ID
   ;
 
 // An array access is a left hand side expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
