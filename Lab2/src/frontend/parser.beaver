@@ -217,7 +217,10 @@ LhsExpr = ArrayAccess
   ;
 
 // An array access is a left hand side expression, followed by an opening bracket, followed by an expression, followed by a closing bracket.
-ArrayAccess = LhsExpr LBRACKET Expression RBRACKET;
+ArrayAccess = ID LBRACKET Expression RBRACKET
+  | 
+  ArrayAccess LBRACKET Expression RBRACKET
+  ;
 
 // A right hand side expression is an arithmetic expression, optionally followed by a comparison operator and another arithmetic expression. 
 RhsExpr = ArithmeticExpr
@@ -303,7 +306,8 @@ ExprList = ExprListNonEmpty
   ;
                  
 ExprListNonEmpty = Expression COMMA ExprListNonEmpty
-  | Expression
+  | 
+  Expression
   ;
 
 ArrayExpr = LBRACKET ExprListNonEmpty RBRACKET;
