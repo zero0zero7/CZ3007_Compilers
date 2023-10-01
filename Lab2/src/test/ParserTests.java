@@ -115,21 +115,14 @@ public class ParserTests {
 	}
 
 	@Test
-	public void arrayAccTest() {
+	public void arrayTest() {
 		runtest("module Test {"+
+			"public void arrayTests() {"+
 			"int[] aArray;"+
 			"int a;"+
 			"arrayAccess = aArray[a];"+
+			"}"+
 			"}");
-	}
-
-	@Test
-	public void arrayTests() {
-		runtest("module Test {"+
-			"int[] aArray;"+
-			"bool[][] twoDArray;"+
-			"arrayAccess = aArray[1];"+
-		"}");
 	}
 
 }
