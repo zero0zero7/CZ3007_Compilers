@@ -198,6 +198,10 @@ ExpressionStatement = Expression SEMICOLON;
 
 
 // An expression is either an assignment or a right hand side expression.
+// Expression = Assignment
+//   |
+//   RhsExpr
+//   ;
 Expression = RhsExpr
   |
   Assignment
