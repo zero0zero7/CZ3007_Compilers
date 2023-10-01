@@ -296,14 +296,14 @@ PrimaryExpr = LhsExpr
   LPAREN Expression RPAREN
   ;
 
-FunctionCall = ID LPAREN ExprListEmpty RPAREN;
+FunctionCall = ID LPAREN ExprList RPAREN;
 
-ExprListEmpty = ExprListNonEmpty
+ExprList = ExprListNonEmpty
   |
   ;
-ExprListNonEmpty = Expression ExprListTail;
-ExprListTail = COMMA Expression ExprListTail
-  |
+                 
+ExprListNonEmpty = Expression COMMA ExprListNonEmpty
+  | Expression
   ;
 
 ArrayExpr = LBRACKET ExprListNonEmpty RBRACKET;
