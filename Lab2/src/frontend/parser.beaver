@@ -117,7 +117,7 @@ ArrayType = PrimitiveType LBRACKET RBRACKET
 
 // A parameter list is a possibly empty list of parameters separated by commas.
 // eg. int someParam1, bool someParam2
-// Note: Remove left recursion, remove common prefix, remove mutual recursion
+// Note: Remove left recursion, remove common pfrefix, remove mutual recursion
 
 // ParameterList = Parameter ParameterListTail;
 // ParameterListTail = COMMA Parameter ParameterListTail

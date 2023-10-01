@@ -115,9 +115,9 @@ public class ParserTests {
 	}
 
 	@Test
-	public void arrayTest() {
+	public void arrayAccTest() {
 		runtest("module Test {"+
-			"public void arrayTests() {"+
+			"public void arrayF() {" +
 			"int[] aArray;"+
 			"int a;"+
 			"arrayAccess = aArray[a];"+
