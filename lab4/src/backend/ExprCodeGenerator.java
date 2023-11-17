@@ -138,7 +138,7 @@ public class ExprCodeGenerator extends Visitor<Value> {
 	public Value visitArrayIndex(ArrayIndex nd) {
 		/* TODO: generate code for array index */
 
-		Value array = wrap(nd.getArray().accept(this));
+		Value array = wrap(nd.getBase().accept(this));
 		Value index = wrap(nd.getIndex().accept(this));
 		return Jimple.v().newArrayRef(array, index);
 	}
@@ -241,7 +241,7 @@ public class ExprCodeGenerator extends Visitor<Value> {
 	public Value visitNegExpr(NegExpr nd) {
 		/* TODO: generate code for negation expression */
 
-		Value expr = wrap(nd.getExpr().accept(this));
+		Value expr = wrap(nd.getOperand().accept(this));
 		return Jimple.v().newNegExpr(expr);
 	}
 	
