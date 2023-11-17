@@ -134,4 +134,146 @@ public class CompilerTests {
 				new Object[0],
 				42);
 	}
+
+	@Test public void testSubtraction() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    return 100-99;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				1);
+	}
+
+	@Test public void testMultiplication() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    return 23*3;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				69);
+	}
+
+	@Test public void testDivision() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    return 11/5;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				2); // round down cos int div
+	}
+
+		@Test public void testMath() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    return (11/5) + 20 * 3;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				62); // round down cos int div
+	}
+
+	
+	@Test public void returningBool() {
+		runtest("module Test {" +
+				"  public boolean f() {" +
+				"    int x;" +
+				"    x = 1;" +
+				"    int y;" +
+				"    y = 1;" +
+				"    return y==x;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				true);
+	}
+	
+	@Test public void returnString() {
+		runtest("module Test {" +
+				"public type string = \"java.lang.String\";" +
+				"  public string f() {" +
+				"    string s;" +
+				"    s = \"this is a cool test string\";" +
+				"    return s;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				"this is a cool test string");
+	}
+
+
+
+	@Test public void testWhileLoop() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    int i;" +
+				"    i = 10;   " +
+				"	 while(i>5){" + 
+				"       i= i-1;}" +
+				"    return i;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				5);
+	}
+	
+	@Test public void testWhileLoopandBreak() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    int i;" +
+				"    i = 10;   " +
+				"	 while(i>5){" + 
+				"       i= i-1;" +
+				"		break ;}" + 
+				"    return i;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				9);
+	}
+
+	@Test public void testArrays() {
+		runtest("module Test {" +
+				"public type string = \"java.lang.String\";" +
+				"  public string f() {" +
+				"    string[] arr; " +
+				"    arr = [\"abc\", \"def\"];  " +
+				"    return arr[1];" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				"def");
+	}
+
+
+
 }

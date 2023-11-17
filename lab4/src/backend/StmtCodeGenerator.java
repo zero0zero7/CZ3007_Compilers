@@ -104,11 +104,6 @@ public class StmtCodeGenerator extends Visitor<Void> {
 		 *       generate as the break target to the breakTargets map
 		 */
 
-		// Add break target
-		NopStmt breakTarget = j.newNopStmt();
-		breakTargets.put(nd, breakTarget);
-		units.add(breakTarget);
-
 		// Add loop
 		NopStmt loopStart = j.newNopStmt();
 		units.add(loopStart);
@@ -116,6 +111,7 @@ public class StmtCodeGenerator extends Visitor<Void> {
 		// Add condition (same as if statement)
 		Value cond = ExprCodeGenerator.generate(nd.getExpr(), fcg);
 		NopStmt loopEnd = j.newNopStmt();
+		breakTargets.put(nd, loopEnd);
 		units.add(j.newIfStmt(j.newEqExpr(cond, IntConstant.v(0)), loopEnd));
 
 		// Add body
