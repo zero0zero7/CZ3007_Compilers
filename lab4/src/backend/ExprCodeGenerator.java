@@ -166,8 +166,8 @@ public class ExprCodeGenerator extends Visitor<Value> {
 		 *       visitSubExpr, etc., instead
 		 */
 
-		Value left = wrap(nd.getLeft().accept(this));
-		Value right = wrap(nd.getRight().accept(this));
+		final Value left = wrap(nd.getLeft().accept(this));
+		final Value right = wrap(nd.getRight().accept(this));
 
 		Value res = nd.accept(new Visitor<Value>() {
 			@Override
