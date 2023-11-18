@@ -174,6 +174,19 @@ public class CompilerTests {
 				2); // round down cos int div
 	}
 
+	@Test public void testRemainder() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    return 11%5;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				1); 
+	}
+
 		@Test public void testMath() {
 		runtest("module Test {" +
 				"  public int f() {" +
@@ -274,6 +287,23 @@ public class CompilerTests {
 				"def");
 	}
 
-
+	@Test public void testIfElseNeg() {
+		runtest("module Test {" +
+				"  public int f() {" +
+				"    int i;" +
+				"    i = -1;   " +
+				"	 if (i < -2){" + 
+				"       i= i-1;}" +
+				"	 else {" +
+				"		    i = i+1;}" +
+				"    return i;" +
+				"  }" +
+				"}",
+				"Test",
+				"f",
+				new Class<?>[0],
+				new Object[0],
+				0);
+	}
 
 }
